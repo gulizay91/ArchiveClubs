@@ -1,0 +1,16 @@
+
+src/TMS.ArchiveClubs/BookArchive.API/obj/
+
+src/TMS.ArchiveClubs/PublicArchiveGateway.API/obj/
+
+src/TMS.ArchiveClubs/BookArchive.Infrastructure/obj/
+
+src/TMS.ArchiveClubs/BookArchive.Domain/obj/
+
+src/TMS.ArchiveClubs/IdentityArchive.API/obj/
+
+src/TMS.ArchiveClubs/IdentityArchive.API/bin/
+
+src/TMS.ArchiveClubs/Shared/bin/
+
+src/TMS.ArchiveClubs/Shared/obj/

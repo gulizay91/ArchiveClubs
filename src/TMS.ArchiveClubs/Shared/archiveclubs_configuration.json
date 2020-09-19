@@ -1,0 +1,209 @@
+{
+  "exclude": [
+    "**/bin",
+    "**/bower_components",
+    "**/jspm_packages",
+    "**/node_modules",
+    "**/obj",
+    "**/platforms"
+  ],
+
+  "ArchiveClubWeb": {
+    "Url": "http://localhost"
+  },
+
+  "BookArchiveApi": {
+    "Url": "http://localhost:50091",
+    "InstanceId": "BookArchiveApi",
+    "DatabaseConnectionString": "Data Source=.;Initial Catalog=Tms_BookArchive;Integrated Security=True;Connect Timeout=30;Encrypt=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False;MultipleActiveResultSets=true",
+    "EndpointName": "BookArchiveApi",
+    "CallbacksSenderEndpointName": "BookArchiveApi.Callbacks.Sender",
+    "ErrorQueueName": "BookArchiveApi.Callbacks.Sender.Error",
+    "ByPassSSLValidation": "true",
+    "EnableServicePulseInstrumentation": "false"
+  },
+
+  "MovieArchiveApi": {
+    "Url": "http://localhost:50081",
+    "InstanceId": "MovieArchiveApi",
+    "DatabaseConnectionString": "Data Source=.;Initial Catalog=Tms_MovieArchive;Integrated Security=True;Connect Timeout=30;Encrypt=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False;MultipleActiveResultSets=true",
+    "EndpointName": "MovieArchiveApi",
+    "CallbacksSenderEndpointName": "MovieArchiveApi.Callbacks.Sender",
+    "ErrorQueueName": "MovieArchiveApi.Callbacks.Sender.Error",
+    "ByPassSSLValidation": "true",
+    "EnableServicePulseInstrumentation": "false"
+  },
+
+  "GameArchiveApi": {
+    "Url": "http://localhost:50071",
+    "InstanceId": "GameArchiveApi",
+    "DatabaseConnectionString": "Data Source=.;Initial Catalog=Tms_GameArchive;Integrated Security=True;Connect Timeout=30;Encrypt=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False;MultipleActiveResultSets=true",
+    "EndpointName": "GameArchiveApi",
+    "CallbacksSenderEndpointName": "GameArchiveApi.Callbacks.Sender",
+    "ErrorQueueName": "GameArchiveApi.Callbacks.Sender.Error",
+    "ByPassSSLValidation": "true",
+    "EnableServicePulseInstrumentation": "false"
+  },
+
+  "IdentityServer": {
+    "Url": "http://localhost:50000",
+    "InstanceId": "IdentityArchive",
+    "DatabaseConnectionString": "Data Source=.;Initial Catalog=Tms_IdentityServer;Integrated Security=True;Connect Timeout=30;Encrypt=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False;MultipleActiveResultSets=true",
+    "CallbacksSenderEndpointName": "IdentityServer.Callbacks.Sender",
+    "ErrorQueueName": "IdentityServer.Callbacks.Sender.Error",
+    "EnableServicePulseInstrumentation": false,
+    "EnableCaptcha": true,
+    "DefaultSystemAdministrator": {
+      "FullName": "SystemAdministrator (Default)",
+      "UserName": "default.systemadmin@tthemoonstudio.com.tr",
+      "Password": "moon13"
+    },
+    "PasswordOptions": {
+      "RequiredLength": 5,
+      "RequireNonAlphanumeric": false,
+      "RequireLowercase": false,
+      "RequireUppercase": false,
+      "RequireDigit": false,
+      "LinkExpirationTimeAfterXHour": "24"
+    },
+    "Clients": [
+      {
+        "ClientName": "The Moon Studio Archive Clubs Web",
+        "ClientId": "archiveclubs.web",
+        "AccessTokenType": "Reference",
+        "AllowAccessTokensViaBrowser": true,
+        "AccessTokenLifetime": 28800,
+        "IdentityTokenLifetime": 28800,
+        "AllowedGrantTypes": [ "implicit" ],
+        "RequireClientSecret": false,
+        "RequireConsent": false,
+        "RedirectUris": [
+          "http://localhost/auth.html",
+          "http://localhost/silent-renew.html"
+        ],
+        "PostLogoutRedirectUris": [ "http://localhost/signout-callback-oidc" ],
+        "AllowedCorsOrigins": [ "http://localhost" ],
+        "AllowedScopes": [
+          "openid",
+          "email",
+          "profile",
+          "bookArchiveApiScope",
+          "movieArchiveApiScope",
+          "gameArchiveApiScope"
+      },
+      {
+        "ClientName": "The Moon Studio Archive Clubs Administration Web",
+        "ClientId": "archiveclubs.administration",
+        "AccessTokenType": "Reference",
+        "AllowAccessTokensViaBrowser": true,
+        "AccessTokenLifetime": 28800,
+        "IdentityTokenLifetime": 28800,
+        "AllowedGrantTypes": [ "implicit" ],
+        "RequireClientSecret": false,
+        "RequireConsent": false,
+        "RedirectUris": [
+          "http://localhost/stsAuthCallback"
+        ],
+        "PostLogoutRedirectUris": [ "http://localhost/signout-callback-oidc" ],
+        "AllowedCorsOrigins": [ "http://localhost" ],
+        "AllowedScopes": [
+          "openid",
+          "email",
+          "profile",
+          "bookArchiveApiScope",
+          "movieArchiveApiScope",
+          "gameArchiveApiScope"
+        ]
+      }
+    ],
+    "IdentityResources": [
+      {
+        "Name": "openid",
+        "DisplayName": "user identifier",
+        "Required": true,
+        "UserClaims": [ "sub" ]
+      },
+      {
+        "Name": "profile",
+        "DisplayName": "user profile",
+        "Emphasize": true,
+        "UserClaims": [ "name", "family_name", "given_name", "middle_name", "nick_name", "preferred_username", "profile", "picture", "website", "gender", "birthdate", "zoneinfo", "locale", "updated_at" ]
+      },
+      {
+        "Name": "email",
+        "DisplayName": "email address",
+        "Emphasize": true,
+        "UserClaims": [ "email", "email_verified" ]
+      },
+      {
+        "Name": "bookArchiveApiScope",
+        "DisplayName": "bookArchive",
+        "Emphasize": true,
+        "UserClaims": [ "sub", "role", "archiveuser", "assignedRoles", "assignedClaims" ]
+      },
+      {
+        "Name": "movieArchiveApiScope",
+        "DisplayName": "movieArchive",
+        "Emphasize": true,
+        "UserClaims": [ "sub", "role", "archiveuser", "assignedRoles", "assignedClaims" ]
+      },
+      {
+        "Name": "gameArchiveApiScope",
+        "DisplayName": "gameArchive",
+        "Emphasize": true,
+        "UserClaims": [ "sub", "role", "archiveuser", "assignedRoles", "assignedClaims" ]
+      }
+    ],
+    "APIResources": [
+      {
+        "Name": "BookArchive_API",
+        "ApiSecrets": [
+          {
+            "Value": "book-archive_api_secret"
+          }
+        ],
+        "Scopes": [
+          {
+            "Name": "bookArchiveApiScope",
+            "DisplayName": "Scope for the BookArchive_API ApiResource"
+          }
+        ],
+        "UserClaims": [ "archiveuser" ]
+      },
+      {
+        "Name": "MovieArchive_API",
+        "ApiSecrets": [
+          {
+            "Value": "movie-archive_api_secret"
+          }
+        ],
+        "Scopes": [
+          {
+            "Name": "movieArchiveApiScope",
+            "DisplayName": "Scope for the MovieArchive_API ApiResource"
+          }
+        ],
+        "UserClaims": [ "archiveuser" ]
+      },
+      {
+        "Name": "GameArchive_API",
+        "ApiSecrets": [
+          {
+            "Value": "game-archive_api_secret"
+          }
+        ],
+        "Scopes": [
+          {
+            "Name": "gameArchiveApiScope",
+            "DisplayName": "Scope for the GameArchive_API ApiResource"
+          }
+        ],
+        "UserClaims": [ "archiveuser" ]
+      }
+    ]
+  },
+
+  "RabbitMqManagementPortal": {
+    "Url": "http://localhost:15672"
+  }
+}
