@@ -1,4 +1,4 @@
-{
+﻿{
   "exclude": [
     "**/bin",
     "**/bower_components",
@@ -15,7 +15,7 @@
   "BookArchiveApi": {
     "Url": "http://localhost:50091",
     "InstanceId": "BookArchiveApi",
-    "DatabaseConnectionString": "Data Source=.;Initial Catalog=Tms_BookArchive;Integrated Security=True;Connect Timeout=30;Encrypt=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False;MultipleActiveResultSets=true",
+    "DatabaseConnectionString": "Data Source=.;Initial Catalog=ArchiveClubs_BookArchive;Integrated Security=True;Connect Timeout=30;Encrypt=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False;MultipleActiveResultSets=true",
     "EndpointName": "BookArchiveApi",
     "CallbacksSenderEndpointName": "BookArchiveApi.Callbacks.Sender",
     "ErrorQueueName": "BookArchiveApi.Callbacks.Sender.Error",
@@ -26,7 +26,7 @@
   "MovieArchiveApi": {
     "Url": "http://localhost:50081",
     "InstanceId": "MovieArchiveApi",
-    "DatabaseConnectionString": "Data Source=.;Initial Catalog=Tms_MovieArchive;Integrated Security=True;Connect Timeout=30;Encrypt=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False;MultipleActiveResultSets=true",
+    "DatabaseConnectionString": "Data Source=.;Initial Catalog=ArchiveClubs_MovieArchive;Integrated Security=True;Connect Timeout=30;Encrypt=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False;MultipleActiveResultSets=true",
     "EndpointName": "MovieArchiveApi",
     "CallbacksSenderEndpointName": "MovieArchiveApi.Callbacks.Sender",
     "ErrorQueueName": "MovieArchiveApi.Callbacks.Sender.Error",
@@ -37,7 +37,7 @@
   "GameArchiveApi": {
     "Url": "http://localhost:50071",
     "InstanceId": "GameArchiveApi",
-    "DatabaseConnectionString": "Data Source=.;Initial Catalog=Tms_GameArchive;Integrated Security=True;Connect Timeout=30;Encrypt=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False;MultipleActiveResultSets=true",
+    "DatabaseConnectionString": "Data Source=.;Initial Catalog=ArchiveClubs_GameArchive;Integrated Security=True;Connect Timeout=30;Encrypt=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False;MultipleActiveResultSets=true",
     "EndpointName": "GameArchiveApi",
     "CallbacksSenderEndpointName": "GameArchiveApi.Callbacks.Sender",
     "ErrorQueueName": "GameArchiveApi.Callbacks.Sender.Error",
@@ -47,8 +47,8 @@
 
   "IdentityServer": {
     "Url": "http://localhost:50000",
-    "InstanceId": "IdentityArchive",
-    "DatabaseConnectionString": "Data Source=.;Initial Catalog=Tms_IdentityServer;Integrated Security=True;Connect Timeout=30;Encrypt=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False;MultipleActiveResultSets=true",
+    "InstanceId": "IdentityServerApi",
+    "DatabaseConnectionString": "Data Source=.;Initial Catalog=ArchiveClubs_IdentityServer;Integrated Security=True;Connect Timeout=30;Encrypt=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False;MultipleActiveResultSets=true",
     "CallbacksSenderEndpointName": "IdentityServer.Callbacks.Sender",
     "ErrorQueueName": "IdentityServer.Callbacks.Sender.Error",
     "EnableServicePulseInstrumentation": false,
@@ -58,12 +58,17 @@
       "UserName": "default.systemadmin@tthemoonstudio.com.tr",
       "Password": "moon13"
     },
+    "UserOptions": {
+      "RequireUniqueEmail": true,
+      "AllowedUserNameCharacters": "abcçdefghiıjklmnoöpqrsştuüvwxyzABCÇDEFGHIİJKLMNOÖPQRSŞTUÜVWXYZ0123456789-._@+'#!/^%{}*"
+    },
     "PasswordOptions": {
       "RequiredLength": 5,
-      "RequireNonAlphanumeric": false,
+      "RequiredUniqueChars": 0,
       "RequireLowercase": false,
       "RequireUppercase": false,
       "RequireDigit": false,
+      "RequireNonAlphanumeric": false,
       "LinkExpirationTimeAfterXHour": "24"
     },
     "Clients": [
@@ -71,10 +76,12 @@
         "ClientName": "The Moon Studio Archive Clubs Web",
         "ClientId": "archiveclubs.web",
         "AccessTokenType": "Reference",
+        "AllowOfflineAccess": true, // support refresh token
+        "RefreshTokenUsage": "OneTimeOnly",
         "AllowAccessTokensViaBrowser": true,
         "AccessTokenLifetime": 28800,
         "IdentityTokenLifetime": 28800,
-        "AllowedGrantTypes": [ "implicit" ],
+        "AllowedGrantTypes": [ "password", "code", "implicit" ],
         "RequireClientSecret": false,
         "RequireConsent": false,
         "RedirectUris": [
@@ -87,18 +94,22 @@
           "openid",
           "email",
           "profile",
+          "rest.auth",
           "bookArchiveApiScope",
           "movieArchiveApiScope",
           "gameArchiveApiScope"
+        ]
       },
       {
         "ClientName": "The Moon Studio Archive Clubs Administration Web",
         "ClientId": "archiveclubs.administration",
         "AccessTokenType": "Reference",
+        "AllowOfflineAccess": true, // support refresh token
+        "RefreshTokenUsage": "OneTimeOnly",
         "AllowAccessTokensViaBrowser": true,
         "AccessTokenLifetime": 28800,
         "IdentityTokenLifetime": 28800,
-        "AllowedGrantTypes": [ "implicit" ],
+        "AllowedGrantTypes": [ "password", "code", "implicit" ],
         "RequireClientSecret": false,
         "RequireConsent": false,
         "RedirectUris": [
@@ -110,6 +121,7 @@
           "openid",
           "email",
           "profile",
+          "rest.auth",
           "bookArchiveApiScope",
           "movieArchiveApiScope",
           "gameArchiveApiScope"
@@ -155,6 +167,20 @@
       }
     ],
     "APIResources": [
+      {
+        "Name": "Identity_API",
+        "DisplayName": "API Resource",
+        "UserClaims": [ "id", "name", "email", "role" ],
+        "Scopes": [
+          {
+            "Name": "rest.auth",
+            "DisplayName": "API Resource",
+            "Required": true,
+            "Emphasize": false,
+            "ShowInDiscoveryDocument": true
+          }
+        ]
+      },
       {
         "Name": "BookArchive_API",
         "ApiSecrets": [

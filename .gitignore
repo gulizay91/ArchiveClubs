@@ -14,3 +14,19 @@ src/TMS.ArchiveClubs/IdentityArchive.API/bin/
 src/TMS.ArchiveClubs/Shared/bin/
 
 src/TMS.ArchiveClubs/Shared/obj/
+
+src/TMS.ArchiveClubs/IdentityServer.API/bin/
+
+src/TMS.ArchiveClubs/IdentityServer.API/obj/
+
+src/TMS.ArchiveClubs/BookArchive.Infrastructure/bin/
+
+src/TMS.ArchiveClubs/BookArchive.Domain/bin/
+
+src/TMS.ArchiveClubs/BookArchive.API/bin/
+
+src/TMS.ArchiveClubs/IdentityServer.Infrastructure/bin/
+
+src/TMS.ArchiveClubs/IdentityServer.Infrastructure/obj/
+
+src/TMS.ArchiveClubs/PublicArchiveGateway.API/bin/

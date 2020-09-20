@@ -32,8 +32,6 @@ namespace IdentityArchive.API
       #region IdentityServer4
       var connectionString = ApplicationConfiguration.Instance.GetValue<string>("IdentityServer:DatabaseConnectionString");
 
-      var useRowNumberForPaging = ApplicationConfiguration.Instance.GetValue<int>("MSSQLVersion") >= 2012 ? false : true;
-
       services.AddIdentityServer(options =>
       {
         options.Events.RaiseSuccessEvents = true;
@@ -55,6 +53,7 @@ namespace IdentityArchive.API
       //services.AddExternalIdentityProviders(); <-- maybe in the future, should we ever need an external provider like facebook
 
       #endregion
+    
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
