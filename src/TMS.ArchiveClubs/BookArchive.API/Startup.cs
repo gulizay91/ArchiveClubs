@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BookArchive.API.Configuration;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -25,6 +27,15 @@ namespace BookArchive.API
     // This method gets called by the runtime. Use this method to add services to the container.
     public void ConfigureServices(IServiceCollection services)
     {
+      // IdentityServerConfiguration 
+      IdentityServerConfiguration.ConfigureService(services);
+
+      // Swagger API documentation
+      SwaggerConfiguration.ConfigureService(services);
+
+      // Cors Orgin 
+      CorsOrginConfiguration.ConfigureService(services);
+
       services.AddControllers();
     }
 
@@ -36,11 +47,14 @@ namespace BookArchive.API
         app.UseDeveloperExceptionPage();
       }
 
-      app.UseHttpsRedirection();
-
       app.UseRouting();
 
+      CorsOrginConfiguration.Configure(app);
+
+      app.UseAuthentication();
       app.UseAuthorization();
+
+      SwaggerConfiguration.Configure(app);
 
       app.UseEndpoints(endpoints =>
       {

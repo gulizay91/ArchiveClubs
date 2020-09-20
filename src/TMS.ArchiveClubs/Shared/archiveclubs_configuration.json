@@ -85,7 +85,9 @@
         "RequireClientSecret": false,
         "RequireConsent": false,
         "RedirectUris": [
+          "http://localhost/callback",
           "http://localhost/auth.html",
+          "http://localhost/popup.html",
           "http://localhost/silent-renew.html"
         ],
         "PostLogoutRedirectUris": [ "http://localhost/signout-callback-oidc" ],
