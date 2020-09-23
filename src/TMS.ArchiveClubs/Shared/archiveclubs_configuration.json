@@ -13,7 +13,7 @@
   },
 
   "BookArchiveApi": {
-    "Url": "http://localhost:50091",
+    "Url": "http://localhost:5091",
     "InstanceId": "BookArchiveApi",
     "DatabaseConnectionString": "Data Source=.;Initial Catalog=ArchiveClubs_BookArchive;Integrated Security=True;Connect Timeout=30;Encrypt=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False;MultipleActiveResultSets=true",
     "EndpointName": "BookArchiveApi",
@@ -24,7 +24,7 @@
   },
 
   "MovieArchiveApi": {
-    "Url": "http://localhost:50081",
+    "Url": "http://localhost:5081",
     "InstanceId": "MovieArchiveApi",
     "DatabaseConnectionString": "Data Source=.;Initial Catalog=ArchiveClubs_MovieArchive;Integrated Security=True;Connect Timeout=30;Encrypt=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False;MultipleActiveResultSets=true",
     "EndpointName": "MovieArchiveApi",
@@ -35,7 +35,7 @@
   },
 
   "GameArchiveApi": {
-    "Url": "http://localhost:50071",
+    "Url": "http://localhost:5071",
     "InstanceId": "GameArchiveApi",
     "DatabaseConnectionString": "Data Source=.;Initial Catalog=ArchiveClubs_GameArchive;Integrated Security=True;Connect Timeout=30;Encrypt=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False;MultipleActiveResultSets=true",
     "EndpointName": "GameArchiveApi",
@@ -46,7 +46,7 @@
   },
 
   "IdentityServer": {
-    "Url": "http://localhost:50000",
+    "Url": "http://localhost:5000",
     "InstanceId": "IdentityServerApi",
     "DatabaseConnectionString": "Data Source=.;Initial Catalog=ArchiveClubs_IdentityServer;Integrated Security=True;Connect Timeout=30;Encrypt=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False;MultipleActiveResultSets=true",
     "CallbacksSenderEndpointName": "IdentityServer.Callbacks.Sender",
@@ -54,8 +54,8 @@
     "EnableServicePulseInstrumentation": false,
     "EnableCaptcha": true,
     "DefaultSystemAdministrator": {
-      "FullName": "SystemAdministrator (Default)",
-      "UserName": "default.systemadmin@tthemoonstudio.com.tr",
+      "Name": "SystemAdministrator (Default)",
+      "UserName": "default.systemadmin@themoonstudio.com.tr",
       "Password": "moon13"
     },
     "UserOptions": {
@@ -72,20 +72,14 @@
       "LinkExpirationTimeAfterXHour": "24"
     },
     "Clients": [
+      // JavaScript Client SPA
       {
         "ClientName": "The Moon Studio Archive Clubs Web",
         "ClientId": "archiveclubs.web",
-        "AccessTokenType": "Reference",
-        "AllowOfflineAccess": true, // support refresh token
-        "RefreshTokenUsage": "OneTimeOnly",
         "AllowAccessTokensViaBrowser": true,
-        "AccessTokenLifetime": 28800,
-        "IdentityTokenLifetime": 28800,
-        "AllowedGrantTypes": [ "password", "code", "implicit" ],
-        "RequireClientSecret": false,
-        "RequireConsent": false,
+        "AllowedGrantTypes": [ "implicit", "code" ],
         "RedirectUris": [
-          "http://localhost/callback",
+          "http://localhost/auth-callback",
           "http://localhost/auth.html",
           "http://localhost/popup.html",
           "http://localhost/silent-renew.html"
@@ -96,24 +90,21 @@
           "openid",
           "email",
           "profile",
+          "offline_access",
           "rest.auth",
           "bookArchiveApiScope",
           "movieArchiveApiScope",
           "gameArchiveApiScope"
-        ]
+        ],
+        "RequireClientSecret": false,
+        "Enabled": true
       },
+      // interactive ASP.NET Core MVC client
       {
         "ClientName": "The Moon Studio Archive Clubs Administration Web",
         "ClientId": "archiveclubs.administration",
-        "AccessTokenType": "Reference",
-        "AllowOfflineAccess": true, // support refresh token
-        "RefreshTokenUsage": "OneTimeOnly",
         "AllowAccessTokensViaBrowser": true,
-        "AccessTokenLifetime": 28800,
-        "IdentityTokenLifetime": 28800,
-        "AllowedGrantTypes": [ "password", "code", "implicit" ],
-        "RequireClientSecret": false,
-        "RequireConsent": false,
+        "AllowedGrantTypes": [ "implicit", "code" ],
         "RedirectUris": [
           "http://localhost/stsAuthCallback"
         ],
@@ -123,11 +114,34 @@
           "openid",
           "email",
           "profile",
+          "offline_access",
           "rest.auth",
           "bookArchiveApiScope",
           "movieArchiveApiScope",
           "gameArchiveApiScope"
-        ]
+        ],
+        "RequireClientSecret": false,
+        "Enabled": true
+      },
+      // machine to machine client
+      {
+        "ClientName": "The Moon Studio Archive Clubs Api",
+        "ClientId": "archiveclubs.api",
+        "AlwaysIncludeUserClaimsInIdToken": true,
+        "AllowOfflineAccess": true, //support refresh tokens
+        "AccessTokenLifetime": 3600,
+        "RequireConsent": false,
+        "ClientSecrets": [ { "Value": "K7gNU3sdo+OL0wNhqoVWhr3g6s1xYv72ol/pe/Unols=" } ], //secret (sha256)
+        "AllowedGrantTypes": [ "password", "code" ],
+        "AllowedScopes": [
+          "rest.auth",
+          "bookArchiveApiScope",
+          "movieArchiveApiScope",
+          "gameArchiveApiScope"
+        ],
+        "RefreshTokenUsage": "OneTimeOnly",
+        "RequireClientSecret": true,
+        "Enabled": true
       }
     ],
     "IdentityResources": [
@@ -148,85 +162,82 @@
         "DisplayName": "email address",
         "Emphasize": true,
         "UserClaims": [ "email", "email_verified" ]
-      },
-      {
-        "Name": "bookArchiveApiScope",
-        "DisplayName": "bookArchive",
-        "Emphasize": true,
-        "UserClaims": [ "sub", "role", "archiveuser", "assignedRoles", "assignedClaims" ]
-      },
-      {
-        "Name": "movieArchiveApiScope",
-        "DisplayName": "movieArchive",
-        "Emphasize": true,
-        "UserClaims": [ "sub", "role", "archiveuser", "assignedRoles", "assignedClaims" ]
-      },
-      {
-        "Name": "gameArchiveApiScope",
-        "DisplayName": "gameArchive",
-        "Emphasize": true,
-        "UserClaims": [ "sub", "role", "archiveuser", "assignedRoles", "assignedClaims" ]
       }
     ],
     "APIResources": [
       {
         "Name": "Identity_API",
         "DisplayName": "API Resource",
-        "UserClaims": [ "id", "name", "email", "role" ],
+        "UserClaims": [ "id", "name", "email", "role", "archiveuser" ],
         "Scopes": [
-          {
-            "Name": "rest.auth",
-            "DisplayName": "API Resource",
-            "Required": true,
-            "Emphasize": false,
-            "ShowInDiscoveryDocument": true
-          }
+          "rest.auth"
         ]
       },
       {
         "Name": "BookArchive_API",
+        "DisplayName": "BookArchive API Resource",
+        "UserClaims": [ "archiveuser" ],
+        "Scopes": [
+          "bookArchiveApiScope"
+        ],
         "ApiSecrets": [
           {
             "Value": "book-archive_api_secret"
           }
-        ],
-        "Scopes": [
-          {
-            "Name": "bookArchiveApiScope",
-            "DisplayName": "Scope for the BookArchive_API ApiResource"
-          }
-        ],
-        "UserClaims": [ "archiveuser" ]
+        ]
       },
       {
         "Name": "MovieArchive_API",
+        "DisplayName": "MovieArchive API Resource",
+        "UserClaims": [ "archiveuser" ],
+        "Scopes": [
+          "movieArchiveApiScope"
+        ],
         "ApiSecrets": [
           {
             "Value": "movie-archive_api_secret"
           }
-        ],
-        "Scopes": [
-          {
-            "Name": "movieArchiveApiScope",
-            "DisplayName": "Scope for the MovieArchive_API ApiResource"
-          }
-        ],
-        "UserClaims": [ "archiveuser" ]
+        ]
       },
       {
         "Name": "GameArchive_API",
+        "DisplayName": "GameArchive API Resource",
+        "UserClaims": [ "archiveuser" ],
+        "Scopes": [
+          "gameArchiveApiScope"
+        ],
         "ApiSecrets": [
           {
             "Value": "game-archive_api_secret"
           }
-        ],
-        "Scopes": [
-          {
-            "Name": "gameArchiveApiScope",
-            "DisplayName": "Scope for the GameArchive_API ApiResource"
-          }
-        ],
-        "UserClaims": [ "archiveuser" ]
+        ]
+      }
+    ],
+    "APIScopes": [
+      {
+        "Name": "rest.auth",
+        "DisplayName": "API Resource",
+        "Required": true,
+        "Emphasize": false,
+        "ShowInDiscoveryDocument": true
+      },
+      {
+        "Name": "bookArchiveApiScope",
+        "DisplayName": "Scope for the BookArchive_API ApiResource",
+        "Required": false,
+        "ShowInDiscoveryDocument": true
+      },
+      {
+        "Name": "movieArchiveApiScope",
+        "DisplayName": "Scope for the MovieArchive_API ApiResource",
+        "Required": false,
+        "ShowInDiscoveryDocument": true
+      },
+      {
+        "Name": "gameArchiveApiScope",
+        "DisplayName": "Scope for the GameArchive_API ApiResource",
+        "Required": false,
+        "ShowInDiscoveryDocument": true
       }
     ]
   },

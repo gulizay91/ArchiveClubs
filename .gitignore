@@ -30,3 +30,5 @@ src/TMS.ArchiveClubs/IdentityServer.Infrastructure/bin/
 src/TMS.ArchiveClubs/IdentityServer.Infrastructure/obj/
 
 src/TMS.ArchiveClubs/PublicArchiveGateway.API/bin/
+
+src/TMS.ArchiveClubs/IdentityServer.Infrastructure/Migrations/

@@ -1,6 +1,4 @@
 ﻿using IdentityServer.Infrastructure.Persistence;
-using IdentityServer.Infrastructure.Services;
-using IdentityServer4.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -37,12 +35,12 @@ namespace IdentityServer.Infrastructure.Extensions
                  options.ConfigureDbContext = builder => builder.UseSqlServer(configuration.GetValue<string>("DatabaseConnectionString"));
                })
               .AddAspNetIdentity<AppUser>();
+
       return services;
     }
 
     public static IServiceCollection AddServices<TUser>(this IServiceCollection services) where TUser : IdentityUser<int>, new()
     {
-      // config'ten alacak
       //services.AddTransient<IProfileService, IdentityClaimsProfileService>();
       return services;
     }
