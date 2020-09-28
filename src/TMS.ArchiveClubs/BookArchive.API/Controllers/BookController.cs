@@ -20,7 +20,7 @@ namespace BookArchive.API.Controllers
     }
 
     [Authorize]
-    [HttpGet("/api/GetBookList")]
+    [HttpGet("GetBookList")]
     public IActionResult GetBookList()
     {
       var list = new List<string>() {
@@ -31,5 +31,6 @@ namespace BookArchive.API.Controllers
 
       return new JsonResult(list);
     }
+  
   }
 }

@@ -32,3 +32,5 @@ src/TMS.ArchiveClubs/IdentityServer.Infrastructure/obj/
 src/TMS.ArchiveClubs/PublicArchiveGateway.API/bin/
 
 src/TMS.ArchiveClubs/IdentityServer.Infrastructure/Migrations/
+
+src/TMS.ArchiveClubs/.vs/TMS.ArchiveClubs/DesignTimeBuild/.dtbcache.v2

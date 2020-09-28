@@ -114,7 +114,8 @@ namespace IdentityServer.API.Controllers
             }
 
             // we can trust model.ReturnUrl since GetAuthorizationContextAsync returned non-null
-            return Redirect(model.ReturnUrl);
+            //return Redirect(model.ReturnUrl);
+            return Redirect(context.RedirectUri);
           }
 
           // request for a local page
