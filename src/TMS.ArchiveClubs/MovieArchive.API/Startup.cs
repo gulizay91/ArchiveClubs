@@ -1,13 +1,16 @@
+using System;
+using System.IO;
+using System.Reflection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using MovieArchive.API.Configuration;
 using Shared.Configuration;
 using Shared.Model;
-using BookArchive.API.Configuration;
 
-namespace BookArchive.API
+namespace MovieArchive.API
 {
     public class Startup
     {
@@ -24,7 +27,7 @@ namespace BookArchive.API
         public void ConfigureServices(IServiceCollection services)
         {
             // IdentityServerConfiguration 
-            IdentityServerApiConfiguration.ConfigureService(services, "BookArchive_API");
+            IdentityServerApiConfiguration.ConfigureService(services, "MovieArchive_API");
 
             // Swagger API documentation
             SwaggerConfiguration.ConfigureService(services, SwaggerConfig);
@@ -42,6 +45,8 @@ namespace BookArchive.API
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            //app.UseHttpsRedirection();
 
             app.UseRouting();
 

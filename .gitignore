@@ -34,3 +34,7 @@ src/TMS.ArchiveClubs/PublicArchiveGateway.API/bin/
 src/TMS.ArchiveClubs/IdentityServer.Infrastructure/Migrations/
 
 src/TMS.ArchiveClubs/.vs/TMS.ArchiveClubs/DesignTimeBuild/.dtbcache.v2
+
+src/TMS.ArchiveClubs/MovieArchive.API/bin/
+
+src/TMS.ArchiveClubs/MovieArchive.API/obj/
