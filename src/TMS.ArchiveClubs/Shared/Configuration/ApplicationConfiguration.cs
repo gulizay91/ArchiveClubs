@@ -24,7 +24,7 @@ namespace Shared.Configuration
 
       var builder = new ConfigurationBuilder()
           .AddJsonFile(Path.Combine(_configPath, configFileName), optional: false, reloadOnChange: false)
-          .AddJsonFile(string.Format("{0}\\localconfig.json", Environment.CurrentDirectory), true, false);
+          .AddJsonFile(string.Format("{0}\\archiveclubs_configuration.json", Environment.CurrentDirectory), true, false);
 
       Configuration = builder.Build();
     }
@@ -88,7 +88,7 @@ namespace Shared.Configuration
 
       if (string.IsNullOrEmpty(path))
       {
-        // trying e-fatura folder on the root for each logical drive on the computer and take the first path if config file has been found within 
+        // trying the_moon_studio folder on the root for each logical drive on the computer and take the first path if config file has been found within 
         foreach (var drive in Environment.GetLogicalDrives())
         {
           var _tmpPath = Path.Combine(drive, "the_moon_studio");
