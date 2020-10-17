@@ -1,0 +1,57 @@
+{
+  "Routes": [
+    //IdentityServer API -- https://localhost:5001/api/account
+    //IdentityServer API -- http://localhost:5000/api/account
+    {
+      "DownstreamPathTemplate": "/api/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5000
+        }
+      ],
+      "UpstreamPathTemplate": "/identity-api/{everything}",
+      "UpstreamHttpMethod": [ "Put", "Delete", "Get", "Post" ]
+    },
+    //Book API -- https://localhost:5091/api/book
+    //Book API -- http://localhost:5090/api/book
+    {
+      "DownstreamPathTemplate": "/api/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5090
+        }
+      ],
+      "UpstreamPathTemplate": "/book-api/{everything}",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT" ],
+      //"AuthenticationOptions": {
+      //  "AuthenticationProviderKey": "IdentityApiKey",
+      //  "AllowedScopes": [ "bookArchiveApiScope" ]
+      //}
+    },
+    //Movie API -- https://localhost:5081/api/movie
+    //Movie API -- http://localhost:5080/api/movie
+    {
+      "DownstreamPathTemplate": "/api/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5080
+        }
+      ],
+      "UpstreamPathTemplate": "/movie-api/{everything}",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT" ],
+      //"AuthenticationOptions": {
+      //  "AuthenticationProviderKey": "IdentityApiKey",
+      //  "AllowedScopes": [ "movieArchiveApiScope" ]
+      //}
+    }
+  ],
+  "GlobalConfiguration": {
+    "BaseUrl": "https://localhost:5050" // apigetway url
+  }
+}

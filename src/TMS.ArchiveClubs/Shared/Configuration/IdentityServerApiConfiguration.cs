@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System.Linq;
 
 namespace Shared.Configuration
 {
@@ -12,6 +14,11 @@ namespace Shared.Configuration
         public static void ConfigureService(IServiceCollection services, string apiResourceName)
         {
             string identityServerUrl = ApplicationConfiguration.Instance.GetValue<string>("IdentityServer:Url");
+            string apiSecret = ApplicationConfiguration.Instance.GetSection("IdentityServer:APIResources").GetChildren()
+                                    .Select(r => new { 
+                                        Name = r.GetValue<string>("Name"),
+                                        ApiSecret = r.GetSection("ApiSecrets") != null ? r.GetSection("ApiSecrets:0").GetValue<string>("Value") : "" })
+                                    .FirstOrDefault(r => r.Name == apiResourceName)?.ApiSecret;
             services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -31,7 +38,7 @@ namespace Shared.Configuration
             //{
             //  options.LegacyAudienceValidation = true;
             //  options.Authority = identityServerUrl;
-            //  options.ApiSecret = "book-archive_api_secret";
+            //  options.ApiSecret = apiSecret;//"book-archive_api_secret";
             //  options.ApiName = apiResourceName;
             //  options.SupportedTokens = SupportedTokens.Both;
             //  // required if you want to return a 403 and not a 401 for forbidden responses
