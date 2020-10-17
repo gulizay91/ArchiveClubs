@@ -12,8 +12,14 @@
     "Url": "http://localhost"
   },
 
+  "OcelotApiGetway": {
+    "Url": "http://localhost:5050",
+    //"Url": "https://localhost:5051"
+  },
+
   "BookArchiveApi": {
-    "Url": "http://localhost:5091",
+    "Url": "http://localhost:5090",
+    //"Url": "https://localhost:5091",
     "InstanceId": "BookArchiveApi",
     "DatabaseConnectionString": "Data Source=.;Initial Catalog=ArchiveClubs_BookArchive;Integrated Security=True;Connect Timeout=30;Encrypt=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False;MultipleActiveResultSets=true",
     "EndpointName": "BookArchiveApi",
@@ -24,7 +30,8 @@
   },
 
   "MovieArchiveApi": {
-    "Url": "http://localhost:5081",
+    "Url": "http://localhost:5080",
+    //"Url": "https://localhost:5081",
     "InstanceId": "MovieArchiveApi",
     "DatabaseConnectionString": "Data Source=.;Initial Catalog=ArchiveClubs_MovieArchive;Integrated Security=True;Connect Timeout=30;Encrypt=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False;MultipleActiveResultSets=true",
     "EndpointName": "MovieArchiveApi",
@@ -35,7 +42,8 @@
   },
 
   "GameArchiveApi": {
-    "Url": "http://localhost:5071",
+    "Url": "http://localhost:5070",
+    //"Url": "https://localhost:5071",
     "InstanceId": "GameArchiveApi",
     "DatabaseConnectionString": "Data Source=.;Initial Catalog=ArchiveClubs_GameArchive;Integrated Security=True;Connect Timeout=30;Encrypt=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False;MultipleActiveResultSets=true",
     "EndpointName": "GameArchiveApi",
@@ -47,6 +55,7 @@
 
   "IdentityServer": {
     "Url": "http://localhost:5000",
+    //"Url": "https://localhost:5001",
     "InstanceId": "IdentityServerApi",
     "DatabaseConnectionString": "Data Source=.;Initial Catalog=ArchiveClubs_IdentityServer;Integrated Security=True;Connect Timeout=30;Encrypt=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False;MultipleActiveResultSets=true",
     "CallbacksSenderEndpointName": "IdentityServer.Callbacks.Sender",
