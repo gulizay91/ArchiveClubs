@@ -38,6 +38,7 @@ namespace PublicArchiveGateway.API
             // });
 
             services.AddOcelot();
+            services.AddSwaggerForOcelot(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -50,12 +51,11 @@ namespace PublicArchiveGateway.API
 
             app.UseRouting();
 
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapGet("/apigetway/", async context => await context.Response.WriteAsync("ArchiveClubs Api Getway!"));
-            });
+            app.UseSwaggerForOcelotUI(opt => opt.PathToSwaggerGenerator = "/swagger/docs");
 
-            app.UseOcelot();
+            app.UseEndpoints(endpoints => endpoints.MapGet("/apigateway/", async context => await context.Response.WriteAsync("ArchiveClubs Api Gateway!")));
+
+            app.UseOcelot().Wait();
         }
     }
 }
