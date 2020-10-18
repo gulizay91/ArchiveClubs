@@ -14,16 +14,16 @@ namespace PublicArchiveGateway.API
 
     public static IHostBuilder CreateHostBuilder(string[] args) =>
         Host.CreateDefaultBuilder(args)
-            .ConfigureWebHostDefaults(webBuilder =>
-            {
-              webBuilder.UseStartup<Startup>();
-              webBuilder.UseUrls(ApplicationConfiguration.Instance.GetValue<string>("OcelotApiGetway:Url"));
-            })
             .ConfigureAppConfiguration((hostingContext, config) =>
             {
                 config
-                //.SetBasePath(hostingContext.HostingEnvironment.ContentRootPath)
+                .SetBasePath(hostingContext.HostingEnvironment.ContentRootPath)
                 .AddJsonFile("ocelot.json", optional: false, reloadOnChange: true);
+            })
+            .ConfigureWebHostDefaults(webBuilder =>
+            {
+              webBuilder.UseStartup<Startup>();
+              webBuilder.UseUrls(ApplicationConfiguration.Instance.GetValue<string>("OcelotApiGateway:Url"));
             });
     }
 }

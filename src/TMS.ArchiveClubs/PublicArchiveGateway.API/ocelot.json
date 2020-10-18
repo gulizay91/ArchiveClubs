@@ -1,11 +1,21 @@
 {
+  "GlobalConfiguration": {
+    "BaseUrl": "http://localhost:5050", // apigateway url
+    "RateLimitOptions": {
+      "DisableRateLimitHeaders": false, // Http head  X-Rate-Limit and Retry-After Is Disabled
+      "QuotaExceededMessage": "Too many requests, are you OK?", // Message returned when request overload is truncated
+      "HttpStatusCode": 999, // Return when request overload is truncated http status
+      "ClientIdHeader": "client_id" // Used to identify the client's request header, default is ClientId
+    }
+  },
   "Routes": [
     //IdentityServer API -- https://localhost:5001/api/account
     //IdentityServer API -- http://localhost:5000/api/account
     {
-      "DownstreamPathTemplate": "/api/{everything}",
+      "DownstreamPathTemplate": "/{everything}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
+        //  <-------------Local Host details ------------>
         {
           "Host": "localhost",
           "Port": 5000
@@ -14,44 +24,136 @@
       "UpstreamPathTemplate": "/identity-api/{everything}",
       "UpstreamHttpMethod": [ "Put", "Delete", "Get", "Post" ]
     },
-    //Book API -- https://localhost:5091/api/book
-    //Book API -- http://localhost:5090/api/book
+    //Book API -- https://localhost:7001/api/book
+    //Book API -- http://localhost:7000/api/book
     {
       "DownstreamPathTemplate": "/api/{everything}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
+        //  <-------------Local Host details ------------>
         {
           "Host": "localhost",
-          "Port": 5090
+          "Port": 7000
         }
+        //,{
+        //  "Host": "localhost",
+        //  "Port": 7010
+        //}
       ],
       "UpstreamPathTemplate": "/book-api/{everything}",
+      "LoadBalancer": "RoundRobin",
+      //"LoadBalancer": "LeastConnection",
       "UpstreamHttpMethod": [ "GET", "POST", "PUT" ],
+      "RateLimitOptions": {
+        "ClientWhitelist": [ "admin" ],
+        "EnableRateLimiting": true, // Is Current Limiting Enabled
+        "Period": "1m", // Statistics period: 1 s, 5m, 1h, 1d
+        "PeriodTimespan": 15, // How many seconds before the client can try again
+        "Limit": 5 // Maximum number of requests allowed in statistical time period
+      },
+      "SwaggerKey": "book-apigateway"
       //"AuthenticationOptions": {
       //  "AuthenticationProviderKey": "IdentityApiKey",
       //  "AllowedScopes": [ "bookArchiveApiScope" ]
       //}
     },
-    //Movie API -- https://localhost:5081/api/movie
-    //Movie API -- http://localhost:5080/api/movie
+    //Movie API -- https://localhost:8001/api/movie
+    //Movie API -- http://localhost:8000/api/movie
     {
       "DownstreamPathTemplate": "/api/{everything}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
+        //  <-------------Local Host details ------------>
         {
           "Host": "localhost",
-          "Port": 5080
+          "Port": 8000
         }
+        //,{
+        //  "Host": "localhost",
+        //  "Port": 8010
+        //}
       ],
       "UpstreamPathTemplate": "/movie-api/{everything}",
+      "LoadBalancer": "RoundRobin",
+      //"LoadBalancer": "LeastConnection",
       "UpstreamHttpMethod": [ "GET", "POST", "PUT" ],
+      "RateLimitOptions": {
+        "ClientWhitelist": [ "admin" ],
+        "EnableRateLimiting": true, // Is Current Limiting Enabled
+        "Period": "1m", // Statistics period: 1 s, 5m, 1h, 1d
+        "PeriodTimespan": 15, // How many seconds before the client can try again
+        "Limit": 5 // Maximum number of requests allowed in statistical time period
+      },
+      "SwaggerKey": "movie-apigateway"
       //"AuthenticationOptions": {
       //  "AuthenticationProviderKey": "IdentityApiKey",
       //  "AllowedScopes": [ "movieArchiveApiScope" ]
       //}
+    },
+    //Game API -- https://localhost:9001/api/game
+    //Game API -- http://localhost:9000/api/game
+    {
+      "DownstreamPathTemplate": "/api/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        //  <-------------Local Host details ------------>
+        {
+          "Host": "localhost",
+          "Port": 9000
+        }
+        //,{
+        //  "Host": "localhost",
+        //  "Port": 9010
+        //}
+      ],
+      "UpstreamPathTemplate": "/game-api/{everything}",
+      "LoadBalancer": "RoundRobin",
+      //"LoadBalancer": "LeastConnection",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT" ],
+      "RateLimitOptions": {
+        "ClientWhitelist": [ "admin" ],
+        "EnableRateLimiting": true, // Is Current Limiting Enabled
+        "Period": "1m", // Statistics period: 1 s, 5m, 1h, 1d
+        "PeriodTimespan": 15, // How many seconds before the client can try again
+        "Limit": 5 // Maximum number of requests allowed in statistical time period
+      },
+      "SwaggerKey": "game-apigateway"
+      //"AuthenticationOptions": {
+      //  "AuthenticationProviderKey": "IdentityApiKey",
+      //  "AllowedScopes": [ "gameArchiveApiScope" ]
+      //}
     }
   ],
-  "GlobalConfiguration": {
-    "BaseUrl": "https://localhost:5050" // apigetway url
-  }
+  "SwaggerEndPoints": [
+    {
+      "Key": "book-apigateway",
+      "Config": [
+        {
+          "Name": "ArchiveClubs - Book API",
+          "Version": "v1",
+          "Url": "http://localhost:7000/swagger/v1/swagger.json"
+        }
+      ]
+    },
+    {
+      "Key": "movie-apigateway",
+      "Config": [
+        {
+          "Name": "ArchiveClubs - Movie API",
+          "Version": "v1",
+          "Url": "http://localhost:8000/swagger/v1/swagger.json"
+        }
+      ]
+    },
+    {
+      "Key": "game-apigateway",
+      "Config": [
+        {
+          "Name": "ArchiveClubs - Game API",
+          "Version": "v1",
+          "Url": "http://localhost:9000/swagger/v1/swagger.json"
+        }
+      ]
+    }
+  ]
 }

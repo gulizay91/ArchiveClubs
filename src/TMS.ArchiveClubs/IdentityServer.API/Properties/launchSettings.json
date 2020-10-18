@@ -12,7 +12,7 @@
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
-      "launchUrl": "account",
+      "launchUrl": ".well-known/openid-configuration",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
