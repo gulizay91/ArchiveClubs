@@ -42,3 +42,5 @@ src/TMS.ArchiveClubs/MovieArchive.API/obj/
 src/TMS.ArchiveClubs.Presentation/archiveclub-ngweb/node_modules/
 /src/TMS.ArchiveClubs/IdentityServer.API/Properties/PublishProfiles
 /src/TMS.ArchiveClubs/PublicArchiveGateway.API/Properties/PublishProfiles
+
+*.pubxml
