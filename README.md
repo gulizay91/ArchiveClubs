@@ -19,3 +19,18 @@ Update-Database -context AppPersistedGrantDbContext
 Add-Migration init -context AppConfigurationDbContext
 Update-Database -context AppConfigurationDbContext
 ```
+
+### Ocelot API Gateway
+http://localhost:5050/swagger/index.html
+
+http://localhost:5050/book-api/book
+
+http://localhost:5050/movie-api/movie
+
+
+#### BookArchive API 
+http://localhost:7000/swagger/index.html
+
+
+#### MovieArchive API 
+http://localhost:8000/swagger/index.html
