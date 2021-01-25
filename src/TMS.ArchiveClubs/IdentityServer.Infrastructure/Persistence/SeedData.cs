@@ -10,8 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
-using System.Security.Cryptography;
-using System.Text;
+
 
 namespace IdentityServer.Infrastructure.Persistence
 {
@@ -63,8 +62,9 @@ namespace IdentityServer.Infrastructure.Persistence
 
             Console.WriteLine("Completed Seed Data");
 
-            var secret = "secret".ToSha256();
-            Console.WriteLine("Your client_secret for 'secret'.ToSha256 : " + secret);
+            string secretKey = "secret";
+            string secretEncrypt = secretKey.ToSha256();
+            Console.WriteLine($"Your client_secret for '{secretKey}'.ToSha256 : " + secretEncrypt);
 
             var _sysUserInfo = configuration.GetSection("DefaultSystemAdministrator");
             var userMgr = provider.GetRequiredService<UserManager<AppUser>>();
