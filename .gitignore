@@ -45,3 +45,4 @@ src/TMS.ArchiveClubs.Presentation/archiveclub-ngweb/node_modules/
 *.pubxml
 /src/TMS.ArchiveClubs/BookArchive.API/.config/dotnet-tools.json
 /src/TMS.ArchiveClubs/MovieArchive.API/.config/dotnet-tools.json
+*.suo
