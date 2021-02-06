@@ -1,22 +1,22 @@
-﻿using System;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
+﻿using IdentityModel;
+using IdentityServer.API.Helpers;
 using IdentityServer.API.Model;
 using IdentityServer.Infrastructure.Persistence;
+using IdentityServer4;
 using IdentityServer4.Events;
+using IdentityServer4.Extensions;
 using IdentityServer4.Models;
 using IdentityServer4.Services;
 using IdentityServer4.Stores;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using IdentityServer4;
-using IdentityServer.API.Helpers;
-using Microsoft.AspNetCore.Authorization;
-using IdentityServer4.Extensions;
-using IdentityModel;
+using System;
+using System.Linq;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace IdentityServer.API.Controllers
 {
@@ -74,7 +74,7 @@ namespace IdentityServer.API.Controllers
       {
         if (context != null)
         {
-          // if the user cancels, send a result back into IdentityServer as if they 
+          // if the user cancels, send a result back into IdentityServer as if they
           // denied the consent (even if this client does not require consent).
           // this will send back an access denied OIDC error response to the client.
           await _interaction.DenyAuthorizationAsync(context, AuthorizationError.AccessDenied);
@@ -142,7 +142,6 @@ namespace IdentityServer.API.Controllers
       var vm = await BuildLoginViewModelAsync(model);
       return View(vm);
     }
-
 
     /// <summary>
     /// Show logout page
@@ -232,10 +231,10 @@ namespace IdentityServer.API.Controllers
       return View();
     }
 
-
     /*****************************************/
     /* helper APIs for the AccountController */
     /*****************************************/
+
     private async Task<LoginViewModel> BuildLoginViewModelAsync(string returnUrl)
     {
       var context = await _interaction.GetAuthorizationContextAsync(returnUrl);
@@ -588,7 +587,8 @@ namespace IdentityServer.API.Controllers
       return vm;
     }
 
-    #endregion
+    #endregion Web Kısımları
+
     */
   }
 }

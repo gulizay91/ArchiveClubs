@@ -1,7 +1,7 @@
 ﻿namespace IdentityServer.API.Model
 {
-    public class RedirectViewModel
-    {
-        public string RedirectUrl { get; set; }
-    }
+  public class RedirectViewModel
+  {
+    public string RedirectUrl { get; set; }
+  }
 }

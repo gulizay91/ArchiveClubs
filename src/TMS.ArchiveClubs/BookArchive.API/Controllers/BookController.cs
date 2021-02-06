@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 
 namespace BookArchive.API.Controllers
 {
-    [Route("api/[controller]")]
+  [Route("api/[controller]")]
   [ApiController]
   public class BookController : ControllerBase
   {
@@ -27,6 +27,5 @@ namespace BookArchive.API.Controllers
 
       return new JsonResult(list);
     }
-  
   }
 }

@@ -3,15 +3,15 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace MovieArchive.API.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class MovieController : ControllerBase
+  [Route("api/[controller]")]
+  [ApiController]
+  public class MovieController : ControllerBase
+  {
+    [HttpGet]
+    [AllowAnonymous]
+    public string HealthCheck()
     {
-        [HttpGet]
-        [AllowAnonymous]
-        public string HealthCheck()
-        {
-            return "movie api standing";
-        }
+      return "movie api standing";
     }
+  }
 }
