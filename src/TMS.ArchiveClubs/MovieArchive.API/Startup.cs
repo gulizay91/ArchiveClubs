@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -12,11 +13,13 @@ namespace MovieArchive.API
   public class Startup
   {
     private SwaggerConfigModel SwaggerConfig { get; set; }
+    private ApiVersionConfigModel ApiVersionConfig { get; set; }
 
     public Startup(IConfiguration configuration)
     {
       Configuration = configuration;
       SwaggerConfig = ApiConfiguration.Instance.SwaggerConfigModelInstance;
+      ApiVersionConfig = ApiConfiguration.Instance.ApiVersionConfigModelInstance;
     }
 
     public IConfiguration Configuration { get; }
@@ -26,6 +29,9 @@ namespace MovieArchive.API
     {
       // IdentityServerConfiguration
       IdentityServerApiConfiguration.ConfigureService(services, "MovieArchive_API");
+
+      // ApiVersionConfiguration
+      ApiVersionConfiguration.ConfigureService(services, ApiVersionConfig);
 
       // Swagger API documentation
       SwaggerConfiguration.ConfigureService(services, SwaggerConfig);
@@ -38,7 +44,7 @@ namespace MovieArchive.API
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+    public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IApiVersionDescriptionProvider apiVersionDescriptionProvider)
     {
       if (env.IsDevelopment())
       {
@@ -54,7 +60,7 @@ namespace MovieArchive.API
       app.UseAuthentication();
       app.UseAuthorization();
 
-      SwaggerConfiguration.Configure(app, SwaggerConfig);
+      SwaggerConfiguration.Configure(app, SwaggerConfig, apiVersionDescriptionProvider);
 
       app.UseHealthChecks("/hc");
 

@@ -13,7 +13,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using System;
 using System.Linq;
 using System.Security.Claims;
@@ -23,6 +22,7 @@ namespace IdentityServer.API.Controllers
 {
   [SecurityHeaders]
   [AllowAnonymous]
+  [ApiVersion("1.0")]
   public class AccountController : Controller
   {
     private readonly UserManager<AppUser> _userManager;
