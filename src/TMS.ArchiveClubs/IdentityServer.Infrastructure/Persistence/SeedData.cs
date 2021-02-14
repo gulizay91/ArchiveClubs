@@ -61,9 +61,8 @@ namespace IdentityServer.Infrastructure.Persistence
 
       Console.WriteLine("Completed Seed Data");
 
-      string secretKey = "secret";
-      string secretEncrypt = secretKey.ToSha256();
-      Console.WriteLine($"Your client_secret for '{secretKey}'.ToSha256 : " + secretEncrypt);
+      string secretEncrypt = ApplicationConfiguration.secretKey.ToSha256();
+      Console.WriteLine($"Your client_secret for '{ApplicationConfiguration.secretKey}'.ToSha256 : " + secretEncrypt);
 
       var _sysUserInfo = configuration.GetSection("DefaultSystemAdministrator");
       var userMgr = provider.GetRequiredService<UserManager<AppUser>>();

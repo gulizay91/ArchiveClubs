@@ -67,6 +67,11 @@
       "UserName": "default.systemadmin@themoonstudio.com.tr",
       "Password": "moon13"
     },
+    "JwtOptions": {
+      "Security": "secret",
+      "Issuer": "http://localhost:5000", // archiveclub.identityserverUrl
+      "Audience": "The Moon Studio - ArchiveClub"
+    },
     "UserOptions": {
       "RequireUniqueEmail": true,
       "AllowedUserNameCharacters": "abcçdefghiıjklmnoöpqrsştuüvwxyzABCÇDEFGHIİJKLMNOÖPQRSŞTUÜVWXYZ0123456789-._@+'#!/^%{}*"

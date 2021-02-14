@@ -36,6 +36,7 @@ namespace PublicArchiveGateway.API
       //     };
       // });
 
+      services.AddHealthChecks();
       services.AddOcelot();
       services.AddSwaggerForOcelot(Configuration);
     }
@@ -49,6 +50,8 @@ namespace PublicArchiveGateway.API
       }
 
       app.UseRouting();
+
+      app.UseHealthChecks("/hc");
 
       app.UseSwaggerForOcelotUI(opt => opt.PathToSwaggerGenerator = "/swagger/docs");
 

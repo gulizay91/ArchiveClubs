@@ -33,6 +33,7 @@ namespace MovieArchive.API
       // Cors Orgin
       CorsOrginConfiguration.ConfigureService(services);
 
+      services.AddHealthChecks();
       services.AddControllers();
     }
 
@@ -54,6 +55,8 @@ namespace MovieArchive.API
       app.UseAuthorization();
 
       SwaggerConfiguration.Configure(app, SwaggerConfig);
+
+      app.UseHealthChecks("/hc");
 
       app.UseEndpoints(endpoints =>
       {

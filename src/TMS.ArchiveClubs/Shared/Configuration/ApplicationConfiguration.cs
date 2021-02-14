@@ -9,6 +9,9 @@ namespace Shared.Configuration
   {
     private static readonly Lazy<ApplicationConfiguration> Lazy = new Lazy<ApplicationConfiguration>(() => new ApplicationConfiguration());
     public static ApplicationConfiguration Instance => Lazy.Value;
+
+    public static string secretKey;
+
     private IConfiguration Configuration { get; }
 
     private const string projectName = "archiveclubs";
@@ -27,6 +30,7 @@ namespace Shared.Configuration
           .AddJsonFile(string.Format("{0}\\archiveclubs_configuration.json", Environment.CurrentDirectory), true, false);
 
       Configuration = builder.Build();
+      secretKey = GetValue<string>("JwtOptions:Security", "secret");
       Console.WriteLine("builded config.json");
     }
 

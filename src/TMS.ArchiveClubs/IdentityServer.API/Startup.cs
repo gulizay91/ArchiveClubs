@@ -2,10 +2,12 @@ using IdentityServer.Infrastructure.Extensions;
 using IdentityServer.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Logging;
 using Shared.Configuration;
 
 namespace IdentityServer.API
@@ -46,11 +48,16 @@ namespace IdentityServer.API
       if (env.IsDevelopment())
       {
         app.UseDeveloperExceptionPage();
+        IdentityModelEventSource.ShowPII = true;
       }
+
+      app.UseHsts();
+      //app.UseHttpsRedirection();
 
       app.UseStaticFiles();
       app.UseCors("AllowAll");
       app.UseIdentityServer();
+      app.UseCookiePolicy(new CookiePolicyOptions { MinimumSameSitePolicy = SameSiteMode.Lax });
       app.UseMvc(routes =>
       {
         routes.MapRoute(

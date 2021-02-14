@@ -33,6 +33,7 @@ namespace BookArchive.API
       // Cors Orgin
       CorsOrginConfiguration.ConfigureService(services);
 
+      services.AddHealthChecks();
       services.AddControllers();
     }
 
@@ -52,6 +53,8 @@ namespace BookArchive.API
       app.UseAuthorization();
 
       SwaggerConfiguration.Configure(app, SwaggerConfig);
+
+      app.UseHealthChecks("/hc");
 
       app.UseEndpoints(endpoints =>
       {

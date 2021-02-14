@@ -1,4 +1,6 @@
 ﻿using IdentityServer.Infrastructure.Persistence;
+using IdentityServer.Infrastructure.Services;
+using IdentityServer4.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -41,7 +43,7 @@ namespace IdentityServer.Infrastructure.Extensions
 
     public static IServiceCollection AddServices<TUser>(this IServiceCollection services) where TUser : IdentityUser<int>, new()
     {
-      //services.AddTransient<IProfileService, IdentityClaimsProfileService>();
+      services.AddTransient<IProfileService, IdentityClaimsProfileService>();
       return services;
     }
 
