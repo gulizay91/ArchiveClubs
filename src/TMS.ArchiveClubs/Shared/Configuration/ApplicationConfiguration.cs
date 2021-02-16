@@ -30,7 +30,7 @@ namespace Shared.Configuration
           .AddJsonFile(string.Format("{0}\\archiveclubs_configuration.json", Environment.CurrentDirectory), true, false);
 
       Configuration = builder.Build();
-      secretKey = GetValue<string>("JwtOptions:Security", "secret");
+      secretKey = GetValue<string>("IdentityServer:JwtOptions:Security", "secret");
       Console.WriteLine("builded config.json");
     }
 
