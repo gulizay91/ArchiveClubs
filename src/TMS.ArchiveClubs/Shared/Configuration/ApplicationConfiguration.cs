@@ -27,10 +27,10 @@ namespace Shared.Configuration
 
       var builder = new ConfigurationBuilder()
           .AddJsonFile(Path.Combine(_configPath, configFileName), optional: false, reloadOnChange: false)
-          .AddJsonFile(string.Format("{0}\\archiveclubs_configuration.json", Environment.CurrentDirectory), true, false);
+          .AddJsonFile(string.Format("{0}\\{1}", Environment.CurrentDirectory, configFileName), true, false);
 
       Configuration = builder.Build();
-      secretKey = GetValue<string>("JwtOptions:Security", "secret");
+      secretKey = GetValue<string>("IdentityServer:JwtOptions:Security", "secret");
       Console.WriteLine("builded config.json");
     }
 

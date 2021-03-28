@@ -1,5 +1,6 @@
 ﻿using Shared.Model;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 
@@ -11,11 +12,14 @@ namespace MovieArchive.API.Configuration
     public static ApiConfiguration Instance => Lazy.Value;
 
     private readonly SwaggerConfigModel _swaggerConfigModelInstance;
+    private readonly ApiVersionConfigModel _apiVersionConfigModelInstance;
     public SwaggerConfigModel SwaggerConfigModelInstance => _swaggerConfigModelInstance;
+    public ApiVersionConfigModel ApiVersionConfigModelInstance => _apiVersionConfigModelInstance;
 
     private ApiConfiguration()
     {
       // get configuration for this api
+      _apiVersionConfigModelInstance = GetApiVersionConfigModel();
       _swaggerConfigModelInstance = GetSwaggerConfigModel();
     }
 
@@ -23,20 +27,42 @@ namespace MovieArchive.API.Configuration
     {
       var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
       var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+      //List<SwaggerOpenApiInfoModel> apiInfos = new List<SwaggerOpenApiInfoModel>();
+      //foreach (var version in _apiVersionConfigModelInstance.ApiVersionList)
+      //{
+      //  apiInfos.Add(new SwaggerOpenApiInfoModel()
+      //  {
+      //    Title = "MovieArchive API",
+      //    Description = "Movie and Tv Series Archive API for ArchiveClubs",
+      //    Version = version.Item1.ToString() + "." + version.Item2.ToString()
+      //  });
+      //}
       return new SwaggerConfigModel()
       {
-        Version = "v1",
+        ApiName = "MovieAPI",
         XmlPath = xmlPath,
         OpenApiInfo = new SwaggerOpenApiInfoModel()
         {
           Title = "MovieArchive API",
           Description = "Movie and Tv Series Archive API for ArchiveClubs"
         },
-        SwaggerUIOptions = new SwaggerUIOptionsModel()
-        {
-          Url = "/swagger/v1/swagger.json",
-          Name = "ArchiveClubs MovieArchive API V1.0"
-        }
+        //SwaggerUIOptions = new SwaggerUIOptionsModel()
+        //{
+        //  Url = "/swagger/v1/swagger.json",
+        //  Name = "ArchiveClubs MovieArchive API V1.0"
+        //}
+      };
+    }
+
+    private ApiVersionConfigModel GetApiVersionConfigModel()
+    {
+      return new ApiVersionConfigModel()
+      {
+        DefaultApiVersionMajor = 1,
+        DefaultApiVersionMinor = 0,
+        GetApiVersionFromHeader = false,
+        ReportApiVersion = true,
+        ApiVersionList = new List<(int,int)>() { (1,0), (2,0) }
       };
     }
   }

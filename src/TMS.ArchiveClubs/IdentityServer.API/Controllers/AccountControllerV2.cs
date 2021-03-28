@@ -27,6 +27,7 @@ namespace IdentityServer.API.Controllers
   /// </summary>
   [SecurityHeaders]
   [AllowAnonymous]
+  [ApiVersion("2.0", Deprecated = true)]
   public class AccountControllerV2 : Controller
   {
     private readonly TestUserStore _users;
