@@ -72,7 +72,23 @@ namespace Shared.Configuration
           In = ParameterLocation.Header,
           Description = "Please insert JWT with Bearer into field. Example: \"Authorization: Bearer {token}\"",
           Name = "Authorization",
-          Type = SecuritySchemeType.ApiKey
+          Type = SecuritySchemeType.ApiKey,
+          Scheme = "Bearer"
+        });
+
+        option.AddSecurityRequirement(new OpenApiSecurityRequirement
+        {
+          {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            Array.Empty<string>()
+          }
         });
 
         // Set the comments path for the Swagger JSON and UI.

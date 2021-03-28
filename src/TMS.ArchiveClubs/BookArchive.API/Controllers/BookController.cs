@@ -11,6 +11,7 @@ namespace BookArchive.API.Controllers
   public class BookController : ControllerBase
   {
     [HttpGet]
+    [Route("HealthCheckAnonymous")]
     [AllowAnonymous]
     [MapToApiVersion("2.0")]
     public string HealthCheck()
