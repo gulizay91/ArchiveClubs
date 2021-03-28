@@ -3,8 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace MovieArchive.API.Controllers
 {
-  [Route("api/[controller]")]
+  [Route("api/v{version:apiVersion}/[controller]")]
   [ApiController]
+  [ApiVersion("1.0")]
   public class MovieController : ControllerBase
   {
     [HttpGet]

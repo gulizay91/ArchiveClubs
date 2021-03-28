@@ -131,7 +131,12 @@
         {
           "Name": "ArchiveClubs - Book API",
           "Version": "v1",
-          "Url": "http://localhost:7000/swagger/v1/swagger.json"
+          "Url": "http://localhost:7000/swagger/BookAPIv1.0/swagger.json"
+        },
+        {
+          "Name": "ArchiveClubs - Book API",
+          "Version": "v2",
+          "Url": "http://localhost:7000/swagger/BookAPIv2.0/swagger.json"
         }
       ]
     },
@@ -141,7 +146,7 @@
         {
           "Name": "ArchiveClubs - Movie API",
           "Version": "v1",
-          "Url": "http://localhost:8000/swagger/v1/swagger.json"
+          "Url": "http://localhost:8000/swagger/MovieAPIv1.0/swagger.json"
         }
       ]
     },

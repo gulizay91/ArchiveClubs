@@ -1,20 +1,14 @@
-﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.DependencyInjection;
-
-namespace Shared.Configuration
+﻿namespace Shared.Configuration
 {
+  using Microsoft.AspNetCore.Builder;
+  using Microsoft.Extensions.DependencyInjection;
+
+  /// <summary>
+  /// Defines the <see cref="CorsOrginConfiguration" />.
+  /// </summary>
   public static class CorsOrginConfiguration
   {
-    /// <summary>
-    /// Adds localization support for the applicatin
-    /// </summary>
-    /// <param name="services"></param>
-    public static void ConfigureService(IServiceCollection services)
-    {
-      services.AddCors(options => options.AddPolicy("AllowAll", p => p.AllowAnyOrigin()
-        .AllowAnyMethod()
-        .AllowAnyHeader()));
-    }
+    #region Methods
 
     /// <summary>
     /// Configures the specified application.
@@ -24,5 +18,18 @@ namespace Shared.Configuration
     {
       app.UseCors("AllowAll");
     }
+
+    /// <summary>
+    /// Adds localization support for the applicatin.
+    /// </summary>
+    /// <param name="services">.</param>
+    public static void ConfigureService(IServiceCollection services)
+    {
+      services.AddCors(options => options.AddPolicy("AllowAll", p => p.AllowAnyOrigin()
+        .AllowAnyMethod()
+        .AllowAnyHeader()));
+    }
+
+    #endregion
   }
 }

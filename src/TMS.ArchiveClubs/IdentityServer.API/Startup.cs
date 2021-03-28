@@ -30,9 +30,11 @@ namespace IdentityServer.API
               .AddIdentityServerConfig(configuration)
               .AddServices<AppUser>();
 
-      services.AddCors(options => options.AddPolicy("AllowAll", p => p.AllowAnyOrigin()
-        .AllowAnyMethod()
-        .AllowAnyHeader()));
+      // ApiVersionConfiguration
+      ApiVersionConfiguration.ConfigureService(services, new Shared.Model.ApiVersionConfigModel() { DefaultApiVersionMajor = 1, DefaultApiVersionMinor = 0, GetApiVersionFromHeader = true, ReportApiVersion = false, ApiVersionList = null });
+
+      // Cors Orgin
+      CorsOrginConfiguration.ConfigureService(services);
 
       services.AddControllersWithViews();
       services.AddRazorPages();
@@ -54,8 +56,9 @@ namespace IdentityServer.API
       app.UseHsts();
       //app.UseHttpsRedirection();
 
+      CorsOrginConfiguration.Configure(app);
+
       app.UseStaticFiles();
-      app.UseCors("AllowAll");
       app.UseIdentityServer();
       app.UseCookiePolicy(new CookiePolicyOptions { MinimumSameSitePolicy = SameSiteMode.Lax });
       app.UseMvc(routes =>

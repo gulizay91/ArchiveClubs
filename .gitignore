@@ -1,50 +1,57 @@
+################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
 
-src/TMS.ArchiveClubs/BookArchive.API/obj/
+# User-specific files
+*.suo
+*.user
+*.sln.docstates
 
-src/TMS.ArchiveClubs/PublicArchiveGateway.API/obj/
+# Build results
+[Dd]ebug/
+[Rr]elease/
+x64/
+[Bb]in/
+[Oo]bj/
 
-src/TMS.ArchiveClubs/BookArchive.Infrastructure/obj/
+# MSTest test Results
+[Tt]est[Rr]esult*/
+[Bb]uild[Ll]og.*
+TestStore/
 
-src/TMS.ArchiveClubs/BookArchive.Domain/obj/
+# Visual Studio profiler
+*.psess
+*.vsp
+*.vspx
 
-src/TMS.ArchiveClubs/IdentityArchive.API/obj/
+# Publish Web Output
+*.Publish.xml
+*.pubxml
+*.azurePubxml
 
-src/TMS.ArchiveClubs/IdentityArchive.API/bin/
+# Others
+sql/
+*.Cache
+ClientBin/
+Migrations/
+.config/
+[Ss]tyle[Cc]op.*
+![Ss]tyle[Cc]op.targets
+~$*
+*~
+*.dbmdl
+*.[Pp]ublish.xml
 
-src/TMS.ArchiveClubs/Shared/bin/
+*.publishsettings
+*.sqlite
+*.dtbcache
+*.dtbcache.v2
+*.ide
+*.lock
+*.cache
+*.pdb
+*.dotnet-tools.json
 
-src/TMS.ArchiveClubs/Shared/obj/
-
-src/TMS.ArchiveClubs/IdentityServer.API/bin/
-
-src/TMS.ArchiveClubs/IdentityServer.API/obj/
-
-src/TMS.ArchiveClubs/BookArchive.Infrastructure/bin/
-
-src/TMS.ArchiveClubs/BookArchive.Domain/bin/
-
-src/TMS.ArchiveClubs/BookArchive.API/bin/
-
-src/TMS.ArchiveClubs/IdentityServer.Infrastructure/bin/
-
-src/TMS.ArchiveClubs/IdentityServer.Infrastructure/obj/
-
-src/TMS.ArchiveClubs/PublicArchiveGateway.API/bin/
-
-src/TMS.ArchiveClubs/IdentityServer.Infrastructure/Migrations/
-
-src/TMS.ArchiveClubs/.vs/TMS.ArchiveClubs/DesignTimeBuild/.dtbcache.v2
-
-src/TMS.ArchiveClubs/MovieArchive.API/bin/
-
-src/TMS.ArchiveClubs/MovieArchive.API/obj/
 
 src/TMS.ArchiveClubs.Presentation/archiveclub-ngweb/node_modules/
-/src/TMS.ArchiveClubs/IdentityServer.API/Properties/PublishProfiles
-/src/TMS.ArchiveClubs/PublicArchiveGateway.API/Properties/PublishProfiles
-*.pubxml
-/src/TMS.ArchiveClubs/BookArchive.API/.config/dotnet-tools.json
-/src/TMS.ArchiveClubs/MovieArchive.API/.config/dotnet-tools.json
-*.suo
-*.testlog
-*.manifest
+
