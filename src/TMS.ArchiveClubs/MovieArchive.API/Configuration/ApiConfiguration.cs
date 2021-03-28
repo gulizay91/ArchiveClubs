@@ -62,7 +62,7 @@ namespace MovieArchive.API.Configuration
         DefaultApiVersionMinor = 0,
         GetApiVersionFromHeader = false,
         ReportApiVersion = true,
-        ApiVersionList = new List<(int,int)>() { (1,0), (2,0) }
+        ApiVersionList = new List<(int, int)>() { (1, 0), (2, 0) }
       };
     }
   }

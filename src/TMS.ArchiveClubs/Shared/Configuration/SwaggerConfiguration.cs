@@ -1,22 +1,58 @@
-﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Mvc.Abstractions;
-using Microsoft.AspNetCore.Mvc.ApiExplorer;
-using Microsoft.AspNetCore.Mvc.Versioning;
-using Microsoft.AspNetCore.Rewrite;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.OpenApi.Models;
-using Shared.Model;
-using System;
-using System.Linq;
-
-namespace Shared.Configuration
+﻿namespace Shared.Configuration
 {
+  using Microsoft.AspNetCore.Builder;
+  using Microsoft.AspNetCore.Mvc.Abstractions;
+  using Microsoft.AspNetCore.Mvc.ApiExplorer;
+  using Microsoft.AspNetCore.Mvc.Versioning;
+  using Microsoft.AspNetCore.Rewrite;
+  using Microsoft.Extensions.DependencyInjection;
+  using Microsoft.OpenApi.Models;
+  using Shared.Model;
+  using System;
+  using System.Linq;
+
+  /// <summary>
+  /// Defines the <see cref="SwaggerConfiguration" />.
+  /// </summary>
   public class SwaggerConfiguration
   {
+    #region Methods
+
+    /// <summary>
+    /// Configures the specified application.
+    /// </summary>
+    /// <param name="app">The application.</param>
+    /// <param name="model">The model<see cref="SwaggerConfigModel"/>.</param>
+    /// <param name="apiVersionDescriptionProvider">The apiVersionDescriptionProvider<see cref="IApiVersionDescriptionProvider"/>.</param>
+    public static void Configure(IApplicationBuilder app, SwaggerConfigModel model, IApiVersionDescriptionProvider apiVersionDescriptionProvider)
+    {
+      // This will redirect default url to Swagger url
+      var option = new RewriteOptions();
+      option.AddRedirect("^$", "swagger");
+      app.UseRewriter(option);
+
+      app.UseStaticFiles();
+
+      // Enable middleware to serve generated Swagger as a JSON endpoint.
+      app.UseSwagger();
+
+      // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.), specifying the Swagger JSON endpoint.
+      app.UseSwaggerUI(options =>
+      {
+        //options.SwaggerEndpoint(model.SwaggerUIOptions.Url, model.SwaggerUIOptions.Name);
+        // build a swagger endpoint for each discovered API version
+        foreach (var description in apiVersionDescriptionProvider.ApiVersionDescriptions)
+        {
+          options.SwaggerEndpoint($"/swagger/{model.ApiName}{description.GroupName}/swagger.json", $"{description.GroupName.ToUpperInvariant()}");
+        }
+      });
+    }
+
     /// <summary>
     /// Configures the service.
     /// </summary>
     /// <param name="services">The services.</param>
+    /// <param name="model">The model<see cref="SwaggerConfigModel"/>.</param>
     public static void ConfigureService(IServiceCollection services, SwaggerConfigModel model)
     {
       var apiVersionDescriptionProvider = services.BuildServiceProvider().GetService<IApiVersionDescriptionProvider>();
@@ -96,32 +132,6 @@ namespace Shared.Configuration
       });
     }
 
-    /// <summary>
-    /// Configures the specified application.
-    /// </summary>
-    /// <param name="app">The application.</param>
-    public static void Configure(IApplicationBuilder app, SwaggerConfigModel model, IApiVersionDescriptionProvider apiVersionDescriptionProvider)
-    {
-      // This will redirect default url to Swagger url
-      var option = new RewriteOptions();
-      option.AddRedirect("^$", "swagger");
-      app.UseRewriter(option);
-
-      app.UseStaticFiles();
-
-      // Enable middleware to serve generated Swagger as a JSON endpoint.
-      app.UseSwagger();
-
-      // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.), specifying the Swagger JSON endpoint.
-      app.UseSwaggerUI(options =>
-      {
-        //options.SwaggerEndpoint(model.SwaggerUIOptions.Url, model.SwaggerUIOptions.Name);
-        // build a swagger endpoint for each discovered API version  
-        foreach (var description in apiVersionDescriptionProvider.ApiVersionDescriptions)
-        {
-          options.SwaggerEndpoint($"/swagger/{model.ApiName}{description.GroupName}/swagger.json", $"{description.GroupName.ToUpperInvariant()}");
-        }
-      });
-    }
+    #endregion
   }
 }

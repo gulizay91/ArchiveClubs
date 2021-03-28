@@ -1,16 +1,22 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using System.Linq;
-
-namespace Shared.Configuration
+﻿namespace Shared.Configuration
 {
+  using Microsoft.AspNetCore.Authentication.JwtBearer;
+  using Microsoft.Extensions.Configuration;
+  using Microsoft.Extensions.DependencyInjection;
+  using System.Linq;
+
+  /// <summary>
+  /// Defines the <see cref="IdentityServerApiConfiguration" />.
+  /// </summary>
   public static class IdentityServerApiConfiguration
   {
+    #region Methods
+
     /// <summary>
     /// Configures the service.
     /// </summary>
     /// <param name="services">The services.</param>
+    /// <param name="apiResourceName">The apiResourceName<see cref="string"/>.</param>
     public static void ConfigureService(IServiceCollection services, string apiResourceName)
     {
       string identityServerUrl = ApplicationConfiguration.Instance.GetValue<string>("IdentityServer:Url");
@@ -28,24 +34,16 @@ namespace Shared.Configuration
       })
       .AddJwtBearer("Bearer", options =>
       {
-        options.Authority = identityServerUrl; 
-        options.Audience = apiResourceName; 
+        options.Authority = identityServerUrl;
+        options.Audience = apiResourceName;
         options.RequireHttpsMetadata = false;
         options.TokenValidationParameters.ValidateAudience = true;
-        options.TokenValidationParameters.ValidIssuer = identityServerUrl; 
+        options.TokenValidationParameters.ValidIssuer = identityServerUrl;
         options.TokenValidationParameters.ValidateIssuer = true;
-        options.TokenValidationParameters.ValidateLifetime = true; 
+        options.TokenValidationParameters.ValidateLifetime = true;
       });
-      //.AddIdentityServerAuthentication("Bearer", options =>
-      //{
-      //  options.LegacyAudienceValidation = true;
-      //  options.Authority = identityServerUrl;
-      //  options.ApiSecret = apiSecret;
-      //  options.ApiName = apiResourceName;
-      //  options.SupportedTokens = SupportedTokens.Both;
-      //  // required if you want to return a 403 and not a 401 for forbidden responses
-      //  options.RequireHttpsMetadata = false;
-      //});
     }
+
+    #endregion
   }
 }

@@ -1,26 +1,58 @@
-﻿using Microsoft.Extensions.Configuration;
-using System;
-using System.Globalization;
-using System.IO;
-
-namespace Shared.Configuration
+﻿namespace Shared.Configuration
 {
+  using Microsoft.Extensions.Configuration;
+  using System;
+  using System.Globalization;
+  using System.IO;
+
+  /// <summary>
+  /// Defines the <see cref="ApplicationConfiguration" />.
+  /// </summary>
   public sealed class ApplicationConfiguration
   {
-    private static readonly Lazy<ApplicationConfiguration> Lazy = new Lazy<ApplicationConfiguration>(() => new ApplicationConfiguration());
-    public static ApplicationConfiguration Instance => Lazy.Value;
+    #region Constants
 
-    public static string secretKey;
-
-    private IConfiguration Configuration { get; }
-
-    private const string projectName = "archiveclubs";
+    /// <summary>
+    /// Defines the configFileName.
+    /// </summary>
     private const string configFileName = projectName + "_configuration.json";
+
+    /// <summary>
+    /// Defines the configFilePathEnvironmentVariable.
+    /// </summary>
     private const string configFilePathEnvironmentVariable = "tms_configuration_path";
 
-    private readonly string _configPath;
-    public string ConfigurationPath => Path.Combine(_configPath, configFileName);
+    /// <summary>
+    /// Defines the projectName.
+    /// </summary>
+    private const string projectName = "archiveclubs";
 
+    #endregion
+
+    #region Fields
+
+    /// <summary>
+    /// Defines the Lazy.
+    /// </summary>
+    private static readonly Lazy<ApplicationConfiguration> Lazy = new Lazy<ApplicationConfiguration>(() => new ApplicationConfiguration());
+
+    /// <summary>
+    /// Defines the _configPath.
+    /// </summary>
+    private readonly string _configPath;
+
+    /// <summary>
+    /// Defines the secretKey.
+    /// </summary>
+    public static string secretKey;
+
+    #endregion
+
+    #region Constructors
+
+    /// <summary>
+    /// Prevents a default instance of the <see cref="ApplicationConfiguration"/> class from being created.
+    /// </summary>
     private ApplicationConfiguration()
     {
       _configPath = GetConfigurationPath();
@@ -34,6 +66,45 @@ namespace Shared.Configuration
       Console.WriteLine("builded config.json");
     }
 
+    #endregion
+
+    #region Properties
+
+    /// <summary>
+    /// Gets the Instance.
+    /// </summary>
+    public static ApplicationConfiguration Instance => Lazy.Value;
+
+    /// <summary>
+    /// Gets the ConfigurationPath.
+    /// </summary>
+    public string ConfigurationPath => Path.Combine(_configPath, configFileName);
+
+    /// <summary>
+    /// Gets the Configuration.
+    /// </summary>
+    private IConfiguration Configuration { get; }
+
+    #endregion
+
+    #region Methods
+
+    /// <summary>
+    /// The GetSection.
+    /// </summary>
+    /// <param name="configurationKey">The configurationKey<see cref="string"/>.</param>
+    /// <returns>The <see cref="IConfigurationSection"/>.</returns>
+    public IConfigurationSection GetSection(string configurationKey)
+    {
+      return Configuration.GetSection(configurationKey);
+    }
+
+    /// <summary>
+    /// The GetValue.
+    /// </summary>
+    /// <typeparam name="T">.</typeparam>
+    /// <param name="configurationKey">The configurationKey<see cref="string"/>.</param>
+    /// <returns>The <see cref="T"/>.</returns>
     public T GetValue<T>(string configurationKey) where T : IConvertible
     {
       T result;
@@ -65,6 +136,13 @@ namespace Shared.Configuration
       return result;
     }
 
+    /// <summary>
+    /// The GetValue.
+    /// </summary>
+    /// <typeparam name="T">.</typeparam>
+    /// <param name="configurationKey">The configurationKey<see cref="string"/>.</param>
+    /// <param name="defaultValue">The defaultValue<see cref="object"/>.</param>
+    /// <returns>The <see cref="T"/>.</returns>
     public T GetValue<T>(string configurationKey, object defaultValue) where T : IConvertible
     {
       if (Configuration[configurationKey] == null)
@@ -77,11 +155,10 @@ namespace Shared.Configuration
       }
     }
 
-    public IConfigurationSection GetSection(string configurationKey)
-    {
-      return Configuration.GetSection(configurationKey);
-    }
-
+    /// <summary>
+    /// The GetConfigurationPath.
+    /// </summary>
+    /// <returns>The <see cref="string"/>.</returns>
     private string GetConfigurationPath()
     {
       // expecting the path of the configuration file in the Machine level environment variable
@@ -106,5 +183,7 @@ namespace Shared.Configuration
 
       return path;
     }
+
+    #endregion
   }
 }
